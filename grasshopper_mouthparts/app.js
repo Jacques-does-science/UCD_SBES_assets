@@ -540,8 +540,8 @@ class GrasshopperDissectionApp {
     this.strictOrder = true;
     this.explodePercent = 0; // 0 = Intact, 50 = Exploded, 100 = Dissection Card
     this.depthScale = 1.0;
-    this.showLabels = true;
-    this.showSubPins = true;
+    this.showLabels = false;
+    this.showSubPins = false;
     this.ghostHead = false;
     this.showWireframe = false;
 
