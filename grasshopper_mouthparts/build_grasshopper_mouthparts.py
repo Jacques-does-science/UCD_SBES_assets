@@ -22,7 +22,7 @@ import math
 import numpy as np
 from mathutils import Vector, Euler
 
-BASE_DIR = "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEX_DIR = os.path.join(BASE_DIR, "textures")
 
 # Scale factor: 100 pixels in reference image = 1.0 Blender unit (so 652x784 image is ~6.52 x 7.84 units)
@@ -156,36 +156,44 @@ def compute_anatomical_profile(part_name, u_norm, v_norm, d_px, d_cran_px=0.0):
             return ant_camber - ant_rad, ant_camber + ant_rad
 
     elif part_name == "Labrum":
-        # Concavo-convex 3D shield (max_dist ~ 0.36 units -> half_t ~ 0.22 units)
-        half_t = rounded_thickness(d_units, max_radius=0.22)
+        # Sleek concavo-convex domed chitin shield (matches low-profile shell seen in specimen video)
+        half_t = rounded_thickness(d_units, max_radius=0.11)
         arch = math.sin(u_norm * math.pi) * math.sin(v_norm * math.pi)
-        camber = -0.20 * arch
-        return camber - half_t, camber + half_t * 0.70
+        camber = -0.24 * arch
+        return camber - half_t * 0.75, camber + half_t * 0.45
 
     elif part_name in ("Mandible_R", "Mandible_L"):
-        # Stout, thick 3D pyramidal chewing jaws (max_dist ~ 0.45 units -> half_t ~ 0.44 units)
+        # Stout, heavily volumetric 3D pyramidal chewing jaws (tallest relief in specimen video)
         is_right_mand = (part_name == "Mandible_R")
         inner_factor = u_norm if is_right_mand else (1.0 - u_norm)
-        chisel = 1.0 - 0.55 * max(0.0, (inner_factor - 0.50) / 0.50)
-        half_t = rounded_thickness(d_units, max_radius=0.44) * chisel
-        camber = -0.06 * math.sin(u_norm * math.pi)
+        # Sharp taper from thick outer condylar base to sculpted medial incisor/molar cutting edge
+        chisel = 1.0 - 0.72 * max(0.0, (inner_factor - 0.42) / 0.58)
+        condyle_bulge = 0.14 * max(0.0, 1.0 - inner_factor / 0.55) * math.sin(v_norm * math.pi)
+        half_t = rounded_thickness(d_units, max_radius=0.52) * chisel + condyle_bulge
+        camber = -0.08 * math.sin(u_norm * math.pi)
         return camber - half_t, camber + half_t
 
     elif part_name in ("Maxilla_R", "Maxilla_L"):
-        # Because d_units on the thin 5-segmented palp is <= 0.06 units while on the stipes/galea it is ~0.24 units,
-        # rounded_thickness(d_units, max_radius=0.24) automatically makes the palps slender round cylinders (r~0.06)
-        # while giving the cardo/stipes/galea full 3D body thickness (r~0.24)!
-        half_t = rounded_thickness(d_units, max_radius=0.24)
-        camber = -0.05 * math.sin(v_norm * math.pi)
+        # Compact 3D stipes/galea body (r~0.20) with slender cylindrical 5-segmented palps
+        # that curve anteriorly out of the flat plane as seen in the tilted specimen video
+        half_t = rounded_thickness(d_units, max_radius=0.20)
+        is_right_max = (part_name == "Maxilla_R")
+        palp_dist = max(0.0, (0.50 - u_norm) / 0.50) if is_right_max else max(0.0, (u_norm - 0.50) / 0.50)
+        palp_arc = -0.22 * (palp_dist ** 1.35)
+        body_camber = -0.06 * math.sin(v_norm * math.pi)
+        camber = body_camber + palp_arc
         return camber - half_t, camber + half_t
 
     elif part_name == "Labium":
-        # Similarly, on the Labium, the thin 3-segmented labial palps and horn tips have d_units <= 0.06,
-        # so they become slender round 3D cylinders/cones while the prementum/paraglossae have full 3D volume!
-        half_t = rounded_thickness(d_units, max_radius=0.25)
+        # Thinner dorsal submental plate (v_norm < 0.45), rounded cupped prementum/paraglossae,
+        # and slightly forward-curving 3-segmented labial palps
+        submentum_taper = 0.58 + 0.42 * min(1.0, max(0.0, (v_norm - 0.25) / 0.35))
+        half_t = rounded_thickness(d_units, max_radius=0.22) * submentum_taper
         arch = math.sin(u_norm * math.pi) * math.sin(v_norm * math.pi)
-        camber = +0.18 * arch
-        return camber - half_t * 0.8, camber + half_t
+        lat_dist = max(0.0, (abs(u_norm - 0.5) - 0.22) / 0.28)
+        palp_lift = -0.14 * (lat_dist ** 1.4) * max(0.0, (v_norm - 0.45) / 0.55)
+        camber = +0.16 * arch + palp_lift
+        return camber - half_t * 0.78, camber + half_t
 
     return -rounded_thickness(d_units, 0.22), +rounded_thickness(d_units, 0.22)
 
@@ -348,23 +356,25 @@ def build_watertight_photo_mesh(part_name, part_info, img_w, img_h, step=2, smoo
 
 def build_hypopharynx(col):
     """
-    Builds a sculpted, UV-mapped, textured median tongue-like Hypopharynx that sits inside
-    the preoral cavity between the mandibles/maxillae and anterior to the labium.
+    Builds a sculpted, UV-mapped, textured median tongue-like Hypopharynx matching the compact,
+    slender, slightly curved specimen seen in the dissection slide video.
     """
     bpy.ops.mesh.primitive_uv_sphere_add(segments=28, ring_count=20, radius=1.0, location=(0, 0, 0))
     hypo = bpy.context.active_object
     hypo.name = "Hypopharynx"
-    hypo.scale = (0.30, 0.28, 0.44)
+    hypo.scale = (0.17, 0.12, 0.34)
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
 
-    # Sculpt subtle organic tongue profile: narrower dorsal suspensorium, plump ventral lobe
+    # Sculpt organic slender tongue profile: small flared suspensorial base, slender curved mid-body, tapered apex
     for v in hypo.data.vertices:
-        t = (v.co.z + 0.44) / 0.88  # 0 at bottom apex, 1 at top suspensorium
-        taper = 0.72 + 0.38 * math.sin(t * math.pi * 0.85)
+        t = (v.co.z + 0.34) / 0.68  # 0 at bottom apex, 1 at top suspensorium
+        # Gentle taper toward ventral apex + subtle dorsal suspensorial flare
+        base_flare = 0.25 * max(0.0, (t - 0.72) / 0.28)
+        taper = 0.55 + 0.48 * math.sin(t * math.pi * 0.88) + base_flare
         v.co.x *= taper
-        v.co.y *= taper
-        # Slight anterior convexity (-Y)
-        v.co.y -= 0.06 * math.sin(t * math.pi)
+        v.co.y *= (0.65 + 0.35 * math.sin(t * math.pi))
+        # Subtle anterior tongue arch (-Y)
+        v.co.y -= 0.07 * math.sin(t * math.pi)
 
     for poly in hypo.data.polygons:
         poly.use_smooth = True
@@ -406,62 +416,76 @@ def animate_dissection_states(objs, meta):
     # at Frame 1 (Assembled), the mouthparts nest across the full 3D depth underneath the head!
     configs = {
         "Labrum": {
-            # Step 1 (Front-most): hinges from anterior clypeus rim at Y = -0.82
+            # Step 2 (Anterior-most): hinges from anterior clypeus rim at Y = -0.82
+            # Dissection Card (Frame 100): Top-Center of mouthpieces (matching video slide layout)
             "f1_loc": px_to_vec(325, 308, -0.82),
             "f1_rot": Euler((0.08, 0.0, 0.0)),
             "f50_loc": px_to_vec(175, 565, -1.55),
             "f50_rot": Euler((-0.22, 0.18, 0.0)),
+            "f100_loc": Vector((0.0, 0.0, -0.05)),
         },
         "Mandible_R": {
-            # Step 2 (Viewer's left, behind Labrum at Y = -0.36)
+            # Step 4 (Viewer's left, behind Labrum at Y = -0.36)
+            # Dissection Card (Frame 100): Top-Left of mouthpieces (matching video slide layout)
             "f1_loc": px_to_vec(290, 296, -0.36),
             "f1_rot": Euler((0.0, 0.08, 0.0)),
             "f50_loc": px_to_vec(245, 405, -0.75),
             "f50_rot": Euler((0.0, 0.25, 0.05)),
+            "f100_loc": Vector((-1.85, 0.0, -0.15)),
         },
         "Mandible_L": {
-            # Step 2 (Viewer's right, behind Labrum at Y = -0.32)
+            # Step 4 (Viewer's right, behind Labrum at Y = -0.32)
+            # Dissection Card (Frame 100): Top-Right of mouthpieces (matching video slide layout)
             "f1_loc": px_to_vec(360, 296, -0.32),
             "f1_rot": Euler((0.0, -0.08, 0.0)),
             "f50_loc": px_to_vec(405, 405, -0.75),
             "f50_rot": Euler((0.0, -0.25, -0.05)),
+            "f100_loc": Vector((1.85, 0.0, -0.15)),
         },
         "Maxilla_R": {
             # Step 3 (Viewer's left, behind Mandible_R at Y = +0.22)
+            # Dissection Card (Frame 100): Bottom-Left of mouthpieces (matching video slide layout)
             "f1_loc": px_to_vec(252, 305, 0.22),
             "f1_rot": Euler((0.0, 0.05, 0.0)),
             "f50_loc": px_to_vec(95, 355, 0.35),
             "f50_rot": Euler((0.0, 0.28, 0.0)),
+            "f100_loc": Vector((-2.10, 0.0, -2.20)),
         },
         "Maxilla_L": {
             # Step 3 (Viewer's right, behind Mandible_L at Y = +0.22)
+            # Dissection Card (Frame 100): Bottom-Right of mouthpieces (matching video slide layout)
             "f1_loc": px_to_vec(398, 305, 0.22),
             "f1_rot": Euler((0.0, -0.05, 0.0)),
             "f50_loc": px_to_vec(565, 355, 0.35),
             "f50_rot": Euler((0.0, -0.28, 0.0)),
+            "f100_loc": Vector((2.10, 0.0, -2.20)),
         },
         "Labium": {
             # Step 1 of Dissection (Posterior lower lip closing the preoral cavity at Y = +0.72)
+            # Dissection Card (Frame 100): Bottom-Center of mouthpieces, paraglossae/palps up (matching video)
             "f1_loc": px_to_vec(325, 296, 0.72),
             "f1_rot": Euler((-0.06, 0.0, 0.0)),
             "f50_loc": px_to_vec(465, 595, 1.15),
             "f50_rot": Euler((0.18, -0.15, 0.0)),
+            "f100_loc": Vector((0.0, 0.0, -2.55)),
+            "f100_rot": Euler((0.0, math.pi, 0.0)),
         },
         "Hypopharynx": {
             # Step 5 of Dissection (Central median tongue inside the preoral cavity at Y = +0.34)
+            # Dissection Card (Frame 100): Center, tucked directly below Labrum & above Labium (matching video)
             "f1_loc": px_to_vec(325, 292, 0.34),
             "f1_rot": Euler((0.0, 0.0, 0.0)),
             "f50_loc": px_to_vec(325, 515, 0.45),
             "f50_rot": Euler((-0.12, 0.0, 0.0)),
-            "f100_loc": px_to_vec(325, 585, 0.0),
+            "f100_loc": Vector((0.0, 0.0, -0.98)),
         },
     }
 
     for name, cfg in configs.items():
         obj = objs[name]
-        # Frame 100 location is already set to the exact reference photo location (unless overridden)
+        # Frame 100 location & rotation match the video's Dissection Card layout
         f100_loc = cfg.get("f100_loc", obj.location.copy())
-        f100_rot = Euler((0.0, 0.0, 0.0))
+        f100_rot = cfg.get("f100_rot", Euler((0.0, 0.0, 0.0)))
 
         # Frame 1 (Assembled on Head)
         bpy.context.scene.frame_set(1)
@@ -572,9 +596,10 @@ def main():
 
     objs = {}
     for part_name, part_info in meta["parts"].items():
+        local_tex_path = os.path.join(TEX_DIR, os.path.basename(part_info["tex_path"]))
         mat = create_textured_chitin_material(
             f"Mat_{part_name}",
-            part_info["tex_path"],
+            local_tex_path,
             roughness=0.22 if part_name in ("Labrum", "Mandible_R", "Mandible_L") else 0.28,
             specular=0.80,
             coat=0.40
@@ -601,10 +626,10 @@ def main():
 
     cam = setup_lighting_and_camera()
 
-    # Save .blend at Frame 100 (Dissection Layout matching the photo, ready to scrub to Frame 50 or Frame 1)
+    # Save .blend at Frame 100 (Dissection Layout matching the video, ready to scrub to Frame 50 or Frame 1)
     scene.frame_set(100)
-    cam.location = Vector((0.0, -11.2, 0.0))
-    look_at(cam, (0.0, 0.0, 0.0))
+    cam.location = Vector((0.0, -11.6, -0.15))
+    look_at(cam, (0.0, 0.0, -0.15))
 
     blend_path = os.path.join(BASE_DIR, "grasshopper_mouthparts.blend")
     bpy.ops.wm.save_as_mainfile(filepath=blend_path)
@@ -619,6 +644,27 @@ def main():
         export_animations=True
     )
     print(f"Exported GLB to {glb_path}")
+
+    # Render updated preview images (Dissection Card + Low-Angle 3D Relief view)
+    scene.render.engine = 'CYCLES'
+    scene.cycles.device = 'CPU'
+    scene.cycles.samples = 24
+    scene.render.resolution_x = 640
+    scene.render.resolution_y = 720
+    scene.render.image_settings.file_format = 'PNG'
+
+    scene.frame_set(100)
+    cam.location = Vector((0.0, -11.6, -0.15))
+    look_at(cam, (0.0, 0.0, -0.15))
+    scene.render.filepath = os.path.join(BASE_DIR, "render_dissection_card.png")
+    bpy.ops.render.render(write_still=True)
+    print("Rendered render_dissection_card.png")
+
+    cam.location = Vector((5.8, -8.8, -3.6))
+    look_at(cam, (0.0, 0.0, -1.0))
+    scene.render.filepath = os.path.join(BASE_DIR, "render_side_profile.png")
+    bpy.ops.render.render(write_still=True)
+    print("Rendered render_side_profile.png")
 
 
 if __name__ == "__main__":

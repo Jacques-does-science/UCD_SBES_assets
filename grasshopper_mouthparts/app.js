@@ -51,7 +51,7 @@ const ANATOMY_DATA = {
     states: {
       assembled: { pos: [-0.01, 0.96, -0.72], rot: [-0.06, 0.0, 0.0] },
       exploded:  { pos: [1.39, -2.03, -1.15], rot: [0.18, -0.15, 0.0] },
-      tray:      { pos: [1.035, -2.16, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, -2.55, 0.0], rot: [0.0, 0.0, Math.PI] },
     },
     pinLocal: [0.0, -0.15, 0.22],
     subStructures: [
@@ -79,7 +79,7 @@ const ANATOMY_DATA = {
     states: {
       assembled: { pos: [-0.01, 0.84, 0.82], rot: [0.06, 0.0, 0.0] },
       exploded:  { pos: [-1.51, -1.73, 1.55], rot: [-0.22, 0.18, 0.0] },
-      tray:      { pos: [-1.085, -1.71, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, -0.05, 0.0], rot: [0.0, 0.0, 0.0] },
     },
     pinLocal: [0.0, 0.0, 0.25],
     subStructures: [
@@ -107,7 +107,7 @@ const ANATOMY_DATA = {
     states: {
       assembled: { pos: [-0.74, 0.87, -0.22], rot: [0.0, 0.0, -0.05] },
       exploded:  { pos: [-2.31, 0.37, -0.35], rot: [0.0, -0.28, 0.0] },
-      tray:      { pos: [-2.185, 0.425, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [-2.10, -2.20, 0.0], rot: [0.0, 0.0, 0.0] },
     },
     pinLocal: [0.18, 0.05, 0.20],
     subStructures: [
@@ -135,7 +135,7 @@ const ANATOMY_DATA = {
     states: {
       assembled: { pos: [0.72, 0.87, -0.22], rot: [0.0, 0.0, 0.05] },
       exploded:  { pos: [2.39, 0.37, -0.35], rot: [0.0, 0.28, 0.0] },
-      tray:      { pos: [2.295, 0.395, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [2.10, -2.20, 0.0], rot: [0.0, 0.0, 0.0] },
     },
     pinLocal: [-0.18, 0.05, 0.20],
     subStructures: [
@@ -163,7 +163,7 @@ const ANATOMY_DATA = {
     states: {
       assembled: { pos: [-0.36, 0.96, 0.36], rot: [0.0, 0.0, -0.08] },
       exploded:  { pos: [-0.81, -0.13, 0.75], rot: [0.0, -0.25, -0.05] },
-      tray:      { pos: [-0.645, -0.07, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [-1.85, -0.15, 0.0], rot: [0.0, 0.0, 0.0] },
     },
     pinLocal: [0.0, 0.0, 0.35],
     subStructures: [
@@ -191,7 +191,7 @@ const ANATOMY_DATA = {
     states: {
       assembled: { pos: [0.34, 0.96, 0.32], rot: [0.0, 0.0, 0.08] },
       exploded:  { pos: [0.79, -0.13, 0.75], rot: [0.0, 0.25, 0.05] },
-      tray:      { pos: [0.565, -0.05, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [1.85, -0.15, 0.0], rot: [0.0, 0.0, 0.0] },
     },
     pinLocal: [0.0, 0.0, 0.35],
     subStructures: [
@@ -219,14 +219,14 @@ const ANATOMY_DATA = {
     states: {
       assembled: { pos: [-0.01, 1.00, -0.34], rot: [0.0, 0.0, 0.0] },
       exploded:  { pos: [-0.01, -1.23, -0.45], rot: [-0.12, 0.0, 0.0] },
-      tray:      { pos: [-0.01, -1.93, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, -0.98, 0.0], rot: [0.0, 0.0, 0.0] },
     },
-    pinLocal: [0.0, 0.0, 0.30],
+    pinLocal: [0.0, 0.0, 0.16],
     subStructures: [
-      { name: "Suspensorial Sclerites", detail: "Dorsal supporting rods anchoring to oral cavity", localPos: [0.0, 0.36, 0.12] },
-      { name: "Median Tongue Lobe", detail: "Bulbous fleshy body covered in fine sensory setae", localPos: [0.0, 0.0, 0.28] },
-      { name: "Salivarium Base", detail: "Posterior salivary duct opening near labium", localPos: [0.0, 0.22, -0.22] },
-      { name: "Ventral Apex", detail: "Rounded distal tip guiding chewed plant bolus", localPos: [0.0, -0.38, 0.16] },
+      { name: "Suspensorial Sclerites", detail: "Dorsal supporting rods anchoring to oral cavity", localPos: [0.0, 0.28, 0.08] },
+      { name: "Median Tongue Lobe", detail: "Slender fleshy body covered in fine sensory setae", localPos: [0.0, 0.0, 0.14] },
+      { name: "Salivarium Base", detail: "Posterior salivary duct opening near labium", localPos: [0.0, 0.16, -0.10] },
+      { name: "Ventral Apex", detail: "Tapered distal tip guiding chewed plant bolus", localPos: [0.0, -0.30, 0.10] },
     ],
   },
 };
@@ -618,7 +618,7 @@ class GrasshopperDissectionApp {
   }
 
   async initGrasshopperScene() {
-    this.parts = await this.loadGLB("grasshopper_mouthparts.glb?v=2");
+    this.parts = await this.loadGLB("grasshopper_mouthparts.glb?v=3");
     this.renderPartsListUI();
     this.selectPart("Head_Capsule", false);
     this.recomputeTargetTransforms();
@@ -842,8 +842,8 @@ class GrasshopperDissectionApp {
       } else {
         this.cam.targetYaw = 0.0;
         this.cam.targetPitch = 0.02;
-        this.cam.targetDistance = 10.8;
-        this.cam.targetCenter = [0.0, 0.1, 0.0];
+        this.cam.targetDistance = 11.4;
+        this.cam.targetCenter = [0.0, -0.15, 0.0];
       }
     }
   }
