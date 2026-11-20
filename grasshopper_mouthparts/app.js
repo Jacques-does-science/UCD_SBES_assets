@@ -276,6 +276,182 @@ const QUIZ_QUESTIONS = [
 ];
 
 /* =========================================================================
+   Musca domestica (Housefly) — Sponging Mouthparts & Head 3D Atlas Data
+   Base 3D scan: "Housefly head (Musca domestica)" by Make_it_Visible (CC BY-NC-SA 4.0)
+   ========================================================================= */
+const MUSCA_ANATOMY_DATA = {
+  Musca_Cranium_Group: {
+    id: "Musca_Cranium_Group",
+    name: "Head Capsule (Cranium & Frons)",
+    subtitle: "Cyclorrhaphan Dipteran Cranium • Musca domestica",
+    step: 0,
+    stepLabel: "Cranium",
+    shortSub: "Frontal Vitta, Parafrontalia, Genae & Occiput",
+    sprite: "textures/Musca_Cranium_Group_rgba.png",
+    position:
+      "Hemispherical dipteran head capsule with a velvet-black median frontal vitta flanked by silvery-grey pollinose parafrontalia, facial ridges, genae (cheeks), and a dark charcoal posterior occiput.",
+    function:
+      "Supports the massive compound eyes, houses the brain and cibarial suction pump muscles, and encloses the subcranial cavity into which the sponging proboscis retracts at rest.",
+    instruction:
+      "Orbit around the cranium to compare the silvery-grey pollinose face and velvet-black frontal vitta with the mandibulate cranium of Romalea. Toggle Ghost / X-Ray Head Capsule to see the proboscis base.",
+    states: {
+      assembled: { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      exploded:  { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+    },
+    pinLocal: [0.0, 1.35, 1.05],
+    subStructures: [
+      { name: "Velvet-Black Frontal Vitta", detail: "Dark median stripe running vertically between the eyes", localPos: [0.0, 1.85, 0.95] },
+      { name: "Silvery Parafrontalia & Genae", detail: "Pollinose silver-grey facial plates & cheeks", localPos: [-0.85, 0.35, 1.25] },
+      { name: "Subcranial Cavity", detail: "Ventral recess housing the retracted proboscis rostrum", localPos: [-0.10, -0.55, 0.85] },
+      { name: "Occiput & Cervical Base", detail: "Dark charcoal posterior cranial wall attaching to thorax", localPos: [0.0, 0.45, -1.65] },
+    ],
+  },
+
+  Musca_Compound_Eyes: {
+    id: "Musca_Compound_Eyes",
+    name: "Faceted Compound Eyes",
+    subtitle: "Reddish-Brown Ommatidial Hemispheres • Musca domestica",
+    step: 1,
+    stepLabel: "Vision",
+    shortSub: "Thousands of Hexagonal Ommatidia",
+    sprite: "textures/Musca_Compound_Eyes_rgba.png",
+    position:
+      "Enormous paired brick-red dorsolateral hemispheres occupying most of the head surface, separated by the narrow frons.",
+    function:
+      "Composed of ~3,000–4,000 individual optical units (ommatidia) per eye, providing nearly 360° panoramic vision and ultra-fast flicker-fusion detection for aerial flight and predator evasion.",
+    instruction:
+      "Zoom in closely on the deep reddish-brown eye surface to observe the sculpted ommatidial facets catching specular light.",
+    states: {
+      assembled: { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      exploded:  { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+    },
+    pinLocal: [-1.75, 1.15, 0.65],
+    subStructures: [
+      { name: "Right Compound Eye", detail: "Viewer's left hemispherical array of red ommatidia", localPos: [-1.85, 1.05, 0.55] },
+      { name: "Left Compound Eye", detail: "Viewer's right hemispherical array of red ommatidia", localPos: [1.85, 1.05, 0.55] },
+      { name: "Ocular Margin", detail: "Sharp boundary separating ommatidia from parafrontalia", localPos: [-0.95, 1.25, 1.15] },
+    ],
+  },
+
+  Musca_Antennae: {
+    id: "Musca_Antennae",
+    name: "Aristate Antennae (Postpedicels)",
+    subtitle: "Short 3-Segmented Dipteran Antennae • Musca domestica",
+    step: 2,
+    stepLabel: "Sensory",
+    shortSub: "Paired Flagellomeres in Antennal Fossa",
+    sprite: "textures/Musca_Antennae_rgba.png",
+    position:
+      "Suspended side-by-side in the recessed anterior antennal fossa directly between the compound eyes and above the clypeus.",
+    function:
+      "Unlike the long filiform antennae of grasshoppers, housefly antennae are compact and aristate—packed with olfactory sensilla that detect volatile food odors and air-speed cues during flight.",
+    instruction:
+      "Inspect the recessed antennal groove from the Front and 3/4 Perspective camera presets to compare these compact dipteran antennae with Romalea's long filiform antennae.",
+    states: {
+      assembled: { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      exploded:  { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+    },
+    pinLocal: [-0.04, 1.20, 1.65],
+    subStructures: [
+      { name: "Right Postpedicel (Flagellomere)", detail: "Enlarged 3rd antennal segment bearing olfactory pits", localPos: [-0.18, 1.15, 1.62] },
+      { name: "Left Postpedicel (Flagellomere)", detail: "Paired 3rd antennal segment in the central fossa", localPos: [0.12, 1.15, 1.62] },
+      { name: "Basal Pedicel & Scape", detail: "Proximal dorsal hinge segments inside the lunule", localPos: [-0.04, 1.65, 1.48] },
+    ],
+  },
+
+  Musca_Rostrum_Haustellum: {
+    id: "Musca_Rostrum_Haustellum",
+    name: "Proboscis: Rostrum & Haustellum",
+    subtitle: "Retractable Sponging Mouthpart Shaft • Musca domestica",
+    step: 3,
+    stepLabel: "Mouthparts",
+    shortSub: "Basal Rostrum, Fulcrum & Haustellum",
+    sprite: "textures/Musca_Rostrum_Haustellum_rgba.png",
+    position:
+      "Extends ventrally and anteriorly from the subcranial cavity at the lower margin of the head, linking the cranium to the distal sponging labellum.",
+    function:
+      "Forms the flexible elbowed stalk of the sponging proboscis: the basal rostrum houses the cibarial suction pump (fulcrum), while the sclerotized haustellum encloses the labrum-epipharynx food canal and salivary hypopharynx.",
+    instruction:
+      "Switch to the Side Profile or Ventral camera preset to examine the elbowed flexure of the rostrum and haustellum protruding beneath the head capsule.",
+    states: {
+      assembled: { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      exploded:  { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+    },
+    pinLocal: [-0.18, -1.12, 0.65],
+    subStructures: [
+      { name: "Basal Rostrum (Basiproboscis)", detail: "Proximal membranous cone articulating with head", localPos: [-0.16, -0.82, 0.35] },
+      { name: "Haustellum (Mediproboscis)", detail: "Sclerotized middle shaft enclosing the food canal", localPos: [-0.18, -1.28, 0.72] },
+    ],
+  },
+
+  Musca_Labellum: {
+    id: "Musca_Labellum",
+    name: "Labellum (Sponging Pad)",
+    subtitle: "Bilobed Distal Labial Cushion • Musca domestica",
+    step: 4,
+    stepLabel: "Mouthparts",
+    shortSub: "Sponging Lobes & Pseudotracheae",
+    sprite: "textures/Musca_Labellum_rgba.png",
+    position:
+      "Terminal bilobed cushion at the distal tip of the proboscis (derived evolutionarily from the labial palps/paraglossae).",
+    function:
+      "Presses flat against solid or liquid substrates, regurgitating salivary enzymes to liquefy nutrients and drawing the solution upward by capillary action through microscopic grooved channels (pseudotracheae) into the food canal.",
+    instruction:
+      "Compare this specialized sponging labellum with the chewing mandibles and labium of Romalea microptera—both evolved from the same ancestral insect mouthpart plan! (3D scan adapted from Make_it_Visible, CC BY-NC-SA 4.0.)",
+    states: {
+      assembled: { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      exploded:  { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+      tray:      { pos: [0.0, 0.25, 0.0], rot: [0.0, 0.0, 0.0] },
+    },
+    pinLocal: [-0.20, -2.05, 1.45],
+    subStructures: [
+      { name: "Bilobed Labellar Cushions", detail: "Soft terminal sponging pads derived from the labium", localPos: [-0.20, -2.10, 1.55] },
+      { name: "Oral Grooves (Pseudotracheae)", detail: "Capillary channels wicking liquefied food to prestomum", localPos: [-0.22, -2.32, 1.68] },
+    ],
+  },
+};
+
+const MUSCA_ORDERED_IDS = [
+  "Musca_Cranium_Group",
+  "Musca_Compound_Eyes",
+  "Musca_Antennae",
+  "Musca_Rostrum_Haustellum",
+  "Musca_Labellum",
+];
+
+const MUSCA_QUIZ_QUESTIONS = [
+  {
+    prompt: "Click the terminal bilobed sponging pad equipped with capillary pseudotracheae for wicking liquefied food.",
+    targets: ["Musca_Labellum"],
+    explanation: "Correct! The Labellum is the soft distal cushion at the tip of the housefly's sponging proboscis.",
+  },
+  {
+    prompt: "Click the enormous reddish-brown hemispherical visual organs made of thousands of hexagonal ommatidia.",
+    targets: ["Musca_Compound_Eyes"],
+    explanation: "Spot on! Musca domestica's large brick-red compound eyes provide nearly panoramic motion detection.",
+  },
+  {
+    prompt: "Click the basal rostrum and middle haustellum shaft that house the suction pump and food canal.",
+    targets: ["Musca_Rostrum_Haustellum"],
+    explanation: "Correct! The Rostrum & Haustellum form the retractable stalk supporting the distal labellum.",
+  },
+  {
+    prompt: "Click the compact paired aristate antennae nestled in the central facial fossa between the eyes.",
+    targets: ["Musca_Antennae"],
+    explanation: "Great job! Unlike grasshopper filiform antennae, housefly antennae are short, 3-segmented aristate organs.",
+  },
+  {
+    prompt: "Click the cranial head capsule featuring the velvet-black frontal vitta and silvery-grey pollinose parafrontalia.",
+    targets: ["Musca_Cranium_Group"],
+    explanation: "Correct! The Cranium supports the eyes, antennae, and the subcranial cavity for the proboscis.",
+  },
+];
+
+/* =========================================================================
    Minimal 4x4 Matrix & Vector3 Math Utilities
    ========================================================================= */
 function mat4Identity() {
@@ -529,6 +705,8 @@ class GrasshopperDissectionApp {
 
     // Scene State
     this.animStarted = false;
+    this.activeSpecies = "grasshopper"; // 'grasshopper' | 'musca'
+    this.speciesCache = {};
     this.parts = {};
     this.selectedPartId = "Head_Capsule";
     this.hoveredPartId = null;
@@ -569,15 +747,15 @@ class GrasshopperDissectionApp {
   }
 
   getActiveAnatomyData() {
-    return ANATOMY_DATA;
+    return this.activeSpecies === "musca" ? MUSCA_ANATOMY_DATA : ANATOMY_DATA;
   }
 
   getActiveOrderedIds() {
-    return ORDERED_PART_IDS;
+    return this.activeSpecies === "musca" ? MUSCA_ORDERED_IDS : ORDERED_PART_IDS;
   }
 
   getActiveQuizQuestions() {
-    return QUIZ_QUESTIONS;
+    return this.activeSpecies === "musca" ? MUSCA_QUIZ_QUESTIONS : QUIZ_QUESTIONS;
   }
 
   initShaders() {
@@ -618,7 +796,9 @@ class GrasshopperDissectionApp {
   }
 
   async initGrasshopperScene() {
-    this.parts = await this.loadGLB("grasshopper_mouthparts.glb?v=3");
+    this.activeSpecies = "grasshopper";
+    this.parts = await this.loadGLB("grasshopper_mouthparts.glb?v=3", ANATOMY_DATA);
+    this.speciesCache.grasshopper = this.parts;
     this.renderPartsListUI();
     this.selectPart("Head_Capsule", false);
     this.recomputeTargetTransforms();
@@ -631,10 +811,78 @@ class GrasshopperDissectionApp {
     }
   }
 
+  async switchSpecies(speciesId) {
+    if (speciesId === this.activeSpecies) return;
+    this.activeSpecies = speciesId;
+    const isMusca = speciesId === "musca";
+
+    // Update Species Switcher active buttons
+    document.querySelectorAll("#speciesSwitcher .species-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.species === speciesId);
+    });
+
+    // Update Header Branding & Left Sidebar visibility
+    const brandTitle = document.getElementById("brandTitle");
+    const brandSubtitle = document.getElementById("brandSubtitle");
+    const stateControls = document.getElementById("stateControls");
+    const guidedSection = document.getElementById("guidedSection");
+    const toolForceps = document.getElementById("toolForceps");
+    const layersHeading = document.getElementById("layersHeading");
+    const depthRow = document.getElementById("depthScaleSlider")?.closest(".control-row");
+
+    if (isMusca) {
+      brandTitle.textContent = "MuscaBio_3D";
+      brandSubtitle.innerHTML = "Sponging Mouthparts &amp; Head 3D Atlas • <em>Musca domestica</em>";
+      stateControls.style.display = "none";
+      guidedSection.style.display = "none";
+      toolForceps.style.display = "none";
+      layersHeading.textContent = "Head & Proboscis Structures";
+      if (depthRow) depthRow.style.display = "none";
+      if (this.toolMode === "forceps") this.setToolMode("inspect");
+    } else {
+      brandTitle.textContent = "GrasshopperBio_3D";
+      brandSubtitle.innerHTML = "Mandibulate Mouthparts Virtual Dissection Lab • <em>Romalea microptera</em>";
+      stateControls.style.display = "flex";
+      guidedSection.style.display = "block";
+      toolForceps.style.display = "inline-flex";
+      layersHeading.textContent = "Anatomical Layers (Dissection Order)";
+      if (depthRow) depthRow.style.display = "flex";
+    }
+
+    // Reset selection, hover, isolation & quiz state
+    this.hoveredPartId = null;
+    this.activeSubStructureIdx = null;
+    this.isolatedPartId = null;
+    document.getElementById("btnIsolate").classList.remove("active");
+
+    if (this.speciesCache[speciesId]) {
+      this.parts = this.speciesCache[speciesId];
+    } else {
+      this.showToast(`Loading ${isMusca ? "Musca domestica" : "Romalea microptera"} 3D model…`);
+      const url = isMusca ? "musca_domestica_head.glb?v=1" : "grasshopper_mouthparts.glb?v=3";
+      const data = isMusca ? MUSCA_ANATOMY_DATA : ANATOMY_DATA;
+      this.parts = await this.loadGLB(url, data);
+      this.speciesCache[speciesId] = this.parts;
+    }
+
+    this.recomputeTargetTransforms();
+    this.renderPartsListUI();
+    this.selectPart(isMusca ? "Musca_Cranium_Group" : "Head_Capsule", false);
+    if (!isMusca) this.updateDissectionProgressUI();
+    if (this.toolMode === "quiz") {
+      this.quizIndex = 0;
+      this.quizCorrect = 0;
+      this.quizTotal = 0;
+      this.renderQuizQuestion();
+    }
+    this.setCameraPreset("oblique");
+    this.showToast(`Switched specimen to ${isMusca ? "Musca domestica (Housefly)" : "Romalea microptera (Grasshopper)"}`);
+  }
+
   /* =======================================================================
      Direct Binary .glb Parser & WebGL2 Buffer Uploader
      ======================================================================= */
-  async loadGLB(url) {
+  async loadGLB(url, anatomyData = ANATOMY_DATA) {
     const res = await fetch(url);
     const arrayBuffer = await res.arrayBuffer();
     const dv = new DataView(arrayBuffer);
@@ -690,11 +938,11 @@ class GrasshopperDissectionApp {
     for (const node of gltf.nodes) {
       if (node.mesh === undefined) continue;
       const partId = node.name;
-      if (!ANATOMY_DATA[partId]) continue;
+      if (!anatomyData[partId]) continue;
 
       if (!partsMap[partId]) {
-        const initPos = [...ANATOMY_DATA[partId].states.assembled.pos];
-        const initRot = [...ANATOMY_DATA[partId].states.assembled.rot];
+        const initPos = [...anatomyData[partId].states.assembled.pos];
+        const initRot = [...anatomyData[partId].states.assembled.rot];
         partsMap[partId] = {
           id: partId,
           prims: [],
@@ -793,11 +1041,13 @@ class GrasshopperDissectionApp {
      ======================================================================= */
   recomputeTargetTransforms() {
     const tGlobal = this.explodePercent / 100.0; // 0 -> 1
+    const orderedIds = this.getActiveOrderedIds();
+    const anatomyData = this.getActiveAnatomyData();
 
-    for (const partId of ORDERED_PART_IDS) {
+    for (const partId of orderedIds) {
       const part = this.parts[partId];
       if (!part) continue;
-      const st = ANATOMY_DATA[partId].states;
+      const st = anatomyData[partId].states;
 
       // If individually extracted via Virtual Forceps, target is its Dissection Card position
       if (part.dissected) {
@@ -1319,6 +1569,11 @@ class GrasshopperDissectionApp {
     // Tool Mode Switcher
     document.querySelectorAll(".tool-btn").forEach((btn) => {
       btn.addEventListener("click", () => this.setToolMode(btn.dataset.tool));
+    });
+
+    // Species Switcher
+    document.querySelectorAll("#speciesSwitcher .species-btn").forEach((btn) => {
+      btn.addEventListener("click", () => this.switchSpecies(btn.dataset.species));
     });
 
     // Strict Order & Reset

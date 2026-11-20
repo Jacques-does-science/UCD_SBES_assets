@@ -93,6 +93,42 @@ html, body {
   color: var(--text-secondary);
 }
 
+/* Species Switcher */
+.species-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-app);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.species-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.16s ease;
+}
+
+.species-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.species-btn.active {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  color: #08121f;
+  box-shadow: 0 1px 6px rgba(56, 189, 248, 0.35);
+}
+
 /* State Preset Buttons & Slider */
 .state-controls {
   display: flex;

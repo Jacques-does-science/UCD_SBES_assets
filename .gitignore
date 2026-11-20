@@ -6,6 +6,9 @@
 **/textures/*.npy
 **/textures/*_tex.png
 
+# Raw high-poly source scans (processed GLB/blend are committed instead)
+*.stl
+
 # macOS system files
 .DS_Store
 __pycache__/
