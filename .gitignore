@@ -3,8 +3,8 @@
 *.blend2
 
 # Intermediate Python numpy height/mask caches (not needed by web app)
-textures/*.npy
-textures/*_tex.png
+**/textures/*.npy
+**/textures/*_tex.png
 
 # macOS system files
 .DS_Store
