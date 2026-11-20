@@ -1,0 +1,143 @@
+{
+  "model_file": "grasshopper_mouthparts.glb",
+  "blend_file": "grasshopper_mouthparts.blend",
+  "species": "Schistocerca americana / Locusta migratoria (Orthoptera: Acrididae)",
+  "mouthpart_type": "Mandibulate (Chewing / Biting)",
+  "animations": {
+    "frame_1": "Intact / In-Situ Anatomical Position",
+    "frame_50": "Exploded 3D Anatomical Layers View",
+    "frame_100": "Laboratory Dissection Card Layout"
+  },
+  "dissection_steps": [
+    {
+      "step": 1,
+      "id": "Labrum",
+      "meshes": [
+        "Labrum"
+      ],
+      "common_name": "Labrum (Upper Lip)",
+      "position": "Anterior-most mouthpiece, hinged to the ventral margin of the clypeus",
+      "sub_structures": [
+        "Clypeolabral hinge",
+        "Bilobed anterior shield",
+        "Median ventral notch (emargination)",
+        "Inner epipharyngeal surface"
+      ],
+      "function": "Acts as an upper lip that holds grass blades vertically in the median notch and prevents food from escaping anteriorly while the mandibles chew.",
+      "dissection_instruction": "Grip the ventral margin of the labrum with fine forceps and lift anteriorly/upward to detach it along the clypeolabral suture."
+    },
+    {
+      "step": 2,
+      "id": "Mandibles",
+      "meshes": [
+        "Mandible_L",
+        "Mandible_R"
+      ],
+      "common_name": "Mandibles (Primary Chewing Jaws)",
+      "position": "Paired lateral jaws immediately posterior to the labrum",
+      "sub_structures": [
+        "Dicondylic articulation condyles",
+        "Distal cutting incisor teeth",
+        "Proximal grinding molar surface",
+        "Adductor/abductor apodeme bases"
+      ],
+      "function": "Heavily sclerotized, asymmetric jaws that move transversely (side-to-side) to shear leaf tissue with sharp distal incisors and crush tough plant fibers with proximal molars.",
+      "dissection_instruction": "After removing the labrum, grip one mandible firmly near its base with sturdy forceps and rock it laterally outward to break the dicondylic hinge and strong adductor muscle."
+    },
+    {
+      "step": 3,
+      "id": "Maxillae",
+      "meshes": [
+        "Maxilla_L",
+        "Maxilla_R"
+      ],
+      "common_name": "Maxillae (Secondary Jaws & Sensory Palps)",
+      "position": "Paired composite appendages immediately posterior to the mandibles",
+      "sub_structures": [
+        "Cardo (basal hinge)",
+        "Stipes (central shaft)",
+        "Lacinia (inner sclerotized toothed fork)",
+        "Galea (outer spoon-shaped hood)",
+        "Maxillary palp (5-segmented sensory feeler)"
+      ],
+      "function": "Manipulates and holds food particles against the mandibles using the toothed lacinia and hooded galea, while the 5-segmented maxillary palps taste and inspect food via chemoreceptors.",
+      "dissection_instruction": "Reach behind the mandibular sockets to grasp the basal cardo/stipes of each maxilla so the lacinia, galea, and 5-segmented maxillary palp come off intact as a single unit."
+    },
+    {
+      "step": 4,
+      "id": "Hypopharynx",
+      "meshes": [
+        "Hypopharynx"
+      ],
+      "common_name": "Hypopharynx (Median Tongue)",
+      "position": "Central preoral cavity between the maxillae, dorsal to the labium",
+      "sub_structures": [
+        "Bulbous median lobe",
+        "Basal suspensorial sclerites",
+        "Salivary duct opening (salivarium)"
+      ],
+      "function": "Fleshy tongue-like organ that mixes chewed plant material with salivary enzymes discharged at its base and helps guide the food bolus into the pharynx.",
+      "dissection_instruction": "Gently pinch the base of the fleshy central lobe with forceps and pull forward from the floor of the preoral cavity."
+    },
+    {
+      "step": 5,
+      "id": "Labium",
+      "meshes": [
+        "Labium"
+      ],
+      "common_name": "Labium (Lower Lip & Labial Palps)",
+      "position": "Posterior-most mouthpiece forming the back wall/floor of the preoral cavity",
+      "sub_structures": [
+        "Submentum (basal plate)",
+        "Mentum & Prementum",
+        "Paraglossae (large outer lobes)",
+        "Glossae (small inner lobes)",
+        "Labial palps (paired 3-segmented sensory palps)"
+      ],
+      "function": "Derived from fused ancestral second maxillae; encloses the preoral cavity posteriorly and uses its bilobed ligula (paraglossae + glossae) and 3-segmented labial palps for sensory testing and guiding food.",
+      "dissection_instruction": "Grasp the basal submentum/mentum near the neck membrane and peel the entire labium (with both 3-segmented labial palps attached) posteriorly off the head capsule."
+    }
+  ],
+  "reference_structures": [
+    {
+      "mesh": "Head_Capsule_Cranium",
+      "name": "Head Capsule (Vertex, Frons & Genae)"
+    },
+    {
+      "mesh": "Head_Clypeus",
+      "name": "Clypeus (Epistomal Sclerite)"
+    },
+    {
+      "mesh": "Compound_Eye_L",
+      "name": "Left Compound Eye"
+    },
+    {
+      "mesh": "Compound_Eye_R",
+      "name": "Right Compound Eye"
+    },
+    {
+      "mesh": "Ocellus_Median",
+      "name": "Median Ocellus (Simple Eye)"
+    },
+    {
+      "mesh": "Ocellus_Lateral_L",
+      "name": "Left Lateral Ocellus"
+    },
+    {
+      "mesh": "Ocellus_Lateral_R",
+      "name": "Right Lateral Ocellus"
+    },
+    {
+      "mesh": "Antenna_L",
+      "name": "Left Filiform Antenna"
+    },
+    {
+      "mesh": "Antenna_R",
+      "name": "Right Filiform Antenna"
+    },
+    {
+      "mesh": "Pronotum_Shield",
+      "name": "Pronotum (Prothoracic Shield Collar)"
+    }
+  ]
+}

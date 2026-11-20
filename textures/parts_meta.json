@@ -1,0 +1,181 @@
+{
+  "image_width": 652,
+  "image_height": 784,
+  "parts": {
+    "Head_Capsule": {
+      "crop_box": [
+        0,
+        652,
+        47,
+        314
+      ],
+      "tight_box": [
+        0,
+        651,
+        55,
+        305
+      ],
+      "center_px": [
+        326.0,
+        180.5
+      ],
+      "size_px": [
+        652,
+        267
+      ],
+      "max_dist": 97.07504272460938,
+      "tex_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Head_Capsule_tex.png",
+      "rgba_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Head_Capsule_rgba.png"
+    },
+    "Maxilla_R": {
+      "crop_box": [
+        31,
+        184,
+        269,
+        432
+      ],
+      "tight_box": [
+        39,
+        175,
+        277,
+        423
+      ],
+      "center_px": [
+        107.5,
+        350.5
+      ],
+      "size_px": [
+        153,
+        163
+      ],
+      "max_dist": 23.81082534790039,
+      "tex_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Maxilla_R_tex.png",
+      "rgba_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Maxilla_R_rgba.png"
+    },
+    "Maxilla_L": {
+      "crop_box": [
+        488,
+        623,
+        272,
+        433
+      ],
+      "tight_box": [
+        496,
+        614,
+        280,
+        424
+      ],
+      "center_px": [
+        555.5,
+        352.5
+      ],
+      "size_px": [
+        135,
+        161
+      ],
+      "max_dist": 25.40988540649414,
+      "tex_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Maxilla_L_tex.png",
+      "rgba_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Maxilla_L_rgba.png"
+    },
+    "Mandible_R": {
+      "crop_box": [
+        204,
+        319,
+        331,
+        467
+      ],
+      "tight_box": [
+        212,
+        310,
+        339,
+        458
+      ],
+      "center_px": [
+        261.5,
+        399.0
+      ],
+      "size_px": [
+        115,
+        136
+      ],
+      "max_dist": 40.485897064208984,
+      "tex_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Mandible_R_tex.png",
+      "rgba_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Mandible_R_rgba.png"
+    },
+    "Mandible_L": {
+      "crop_box": [
+        321,
+        444,
+        325,
+        471
+      ],
+      "tight_box": [
+        329,
+        435,
+        333,
+        462
+      ],
+      "center_px": [
+        382.5,
+        398.0
+      ],
+      "size_px": [
+        123,
+        146
+      ],
+      "max_dist": 45.312232971191406,
+      "tex_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Mandible_L_tex.png",
+      "rgba_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Mandible_L_rgba.png"
+    },
+    "Labrum": {
+      "crop_box": [
+        145,
+        290,
+        515,
+        613
+      ],
+      "tight_box": [
+        153,
+        281,
+        523,
+        604
+      ],
+      "center_px": [
+        217.5,
+        564.0
+      ],
+      "size_px": [
+        145,
+        98
+      ],
+      "max_dist": 35.73704147338867,
+      "tex_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Labrum_tex.png",
+      "rgba_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Labrum_rgba.png"
+    },
+    "Labium": {
+      "crop_box": [
+        339,
+        520,
+        492,
+        724
+      ],
+      "tight_box": [
+        347,
+        511,
+        500,
+        715
+      ],
+      "center_px": [
+        429.5,
+        608.0
+      ],
+      "size_px": [
+        181,
+        232
+      ],
+      "max_dist": 30.352622985839844,
+      "tex_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Labium_tex.png",
+      "rgba_path": "/Users/jacquesolivier/.gemini/antigravity/scratch/grasshopper_mouthparts_3d/textures/Labium_rgba.png"
+    }
+  }
+}

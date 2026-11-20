@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GrasshopperBio 3D — Virtual Mouthparts Dissection Atlas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Navigation & Control Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-badge">3D</div>
+        <div class="brand-text">
+          <h1 id="brandTitle">GrasshopperBio_3D</h1>
+          <span id="brandSubtitle" class="subtitle">Mandibulate Mouthparts Virtual Dissection Lab • <em>Romalea microptera</em></span>
+        </div>
+      </div>
+
+      <!-- Primary State Presets & Explosion Scrub Slider -->
+      <div id="stateControls" class="state-controls" role="group" aria-label="3D Dissection State">
+        <button id="btnStateIntact" class="state-btn active" data-state="0" title="Assemble all mouthparts on the head capsule (Frame 1)">
+          1. Intact Head
+        </button>
+        <button id="btnStateExploded" class="state-btn" data-state="50" title="Separate mouthpart layers in 3D space (Frame 50)">
+          2. 3D Exploded Layers
+        </button>
+        <button id="btnStateTray" class="state-btn" data-state="100" title="Arrange dissected mouthparts on laboratory card (Frame 100)">
+          3. Dissection Card
+        </button>
+        <div class="slider-group">
+          <label for="explodeSlider">Spread</label>
+          <input id="explodeSlider" type="range" min="0" max="100" value="0" step="1" />
+          <span id="explodeValue" class="mono-val">0%</span>
+        </div>
+      </div>
+
+      <!-- Tool Mode Switcher -->
+      <div id="modeControls" class="mode-controls" role="group" aria-label="Interaction Tool Mode">
+        <button id="toolInspect" class="tool-btn active" data-tool="inspect" title="Click any mouthpiece to inspect its anatomy and sub-structures">
+          <span class="tool-icon">🔍</span> Inspect
+        </button>
+        <button id="toolForceps" class="tool-btn" data-tool="forceps" title="Click mouthpieces to extract them with virtual forceps in lab order">
+          <span class="tool-icon">🥢</span> Virtual Forceps
+        </button>
+        <button id="toolQuiz" class="tool-btn" data-tool="quiz" title="Test your knowledge of grasshopper mouthpart anatomy">
+          <span class="tool-icon">🎯</span> Lab Quiz
+        </button>
+      </div>
+    </header>
+
+    <!-- Main 3-Column Workspace -->
+    <main class="workspace">
+      <!-- Left Sidebar: Dissection Protocol & Anatomical Layers -->
+      <aside class="panel left-panel" aria-label="Dissection Layers and Protocol">
+        <div id="guidedSection" class="panel-section guided-section">
+          <div class="section-header">
+            <h2>Guided Dissection Protocol</h2>
+            <label class="toggle-pill" title="Enforce strict 5-step anatomical removal order">
+              <input type="checkbox" id="chkStrictOrder" checked />
+              <span>Strict Order</span>
+            </label>
+          </div>
+          <p id="guidedPrompt" class="guided-prompt">
+            Switch to <strong>Virtual Forceps</strong> or click any mouthpiece to begin the 5-step dissection sequence.
+          </p>
+          <div class="progress-bar-wrap" aria-label="Dissection Progress">
+            <div id="dissectionProgressFill" class="progress-bar-fill" style="width: 0%"></div>
+          </div>
+          <div class="progress-meta">
+            <span id="dissectionProgressText">0 / 7 Mouthpieces Extracted</span>
+            <button id="btnResetDissection" class="link-btn" type="button">Reset All</button>
+          </div>
+        </div>
+
+        <div class="panel-section layers-section">
+          <div class="section-header">
+            <h2 id="layersHeading">Anatomical Layers (Dissection Order)</h2>
+          </div>
+          <div id="partsList" class="parts-list" role="list"></div>
+        </div>
+
+        <div class="panel-section display-section">
+          <div class="section-header">
+            <h2>Display &amp; Rendering</h2>
+          </div>
+          <div class="control-row">
+            <label for="chkLabels">3D Anatomical Callout Pins</label>
+            <input type="checkbox" id="chkLabels" checked />
+          </div>
+          <div class="control-row">
+            <label for="chkSubPins">Show Sub-Structure Markers</label>
+            <input type="checkbox" id="chkSubPins" checked />
+          </div>
+          <div class="control-row">
+            <label for="chkGhostHead">Ghost / X-Ray Head Capsule</label>
+            <input type="checkbox" id="chkGhostHead" />
+          </div>
+          <div class="control-row">
+            <label for="chkWireframe">Show 3D Mesh Topology</label>
+            <input type="checkbox" id="chkWireframe" />
+          </div>
+          <div class="control-row slider-row">
+            <label for="depthScaleSlider">3D Depth Scale</label>
+            <input id="depthScaleSlider" type="range" min="60" max="160" value="100" step="5" />
+            <span id="depthScaleVal" class="mono-val">1.0×</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Interactive 3D Viewport -->
+      <section class="viewport-container" aria-label="3D Interactive Dissection Viewport">
+        <canvas id="glCanvas"></canvas>
+
+        <!-- 2D Projected 3D Callout Labels Layer -->
+        <div id="labelsOverlay" class="labels-overlay"></div>
+
+        <!-- Quiz Banner (Visible in Quiz Mode) -->
+        <div id="quizBanner" class="quiz-banner" hidden>
+          <div class="quiz-top">
+            <span class="quiz-badge">LAB PRACTICAL QUIZ</span>
+            <span id="quizScore" class="quiz-score">Score: 0 / 0</span>
+          </div>
+          <p id="quizQuestion" class="quiz-question">Click on the Labrum.</p>
+          <div class="quiz-actions">
+            <span id="quizFeedback" class="quiz-feedback"></span>
+            <button id="btnNextQuiz" class="small-btn" type="button">Skip / Next Question →</button>
+          </div>
+        </div>
+
+        <!-- Toast / Action Feedback Banner -->
+        <div id="toastBanner" class="toast-banner" hidden></div>
+
+        <!-- Bottom Camera & View Controls Dock -->
+        <div class="camera-dock" role="toolbar" aria-label="Camera Presets">
+          <span class="dock-label">Camera:</span>
+          <button class="cam-btn" data-cam="front" type="button">Front</button>
+          <button class="cam-btn active" data-cam="oblique" type="button">3/4 Perspective</button>
+          <button class="cam-btn" data-cam="side" type="button">Side Profile (3D Depth)</button>
+          <button class="cam-btn" data-cam="ventral" type="button">Ventral (Oral Cavity)</button>
+          <div class="dock-divider"></div>
+          <button id="btnIsolate" class="cam-btn" type="button" title="Isolate only the currently selected mouthpiece">
+            Isolate Selected
+          </button>
+          <button id="btnResetCam" class="cam-btn" type="button" title="Reset camera orbit">
+            Reset View
+          </button>
+        </div>
+
+        <div class="viewport-hint">
+          <span><strong>Left-Drag:</strong> Orbit 3D</span>
+          <span>•</span>
+          <span><strong>Right-Drag / Shift-Drag:</strong> Pan</span>
+          <span>•</span>
+          <span><strong>Scroll:</strong> Zoom</span>
+          <span>•</span>
+          <span><strong>Click Part:</strong> Inspect / Dissect</span>
+        </div>
+      </section>
+
+      <!-- Right Sidebar: Detailed Anatomical Inspector -->
+      <aside class="panel right-panel" aria-label="Anatomical Structure Inspector">
+        <div class="inspector-header">
+          <div class="inspector-badges">
+            <span id="inspStepBadge" class="step-badge">Reference Base</span>
+            <span id="inspStatusBadge" class="status-badge">Attached on Head</span>
+          </div>
+          <h2 id="inspTitle">Head Capsule (Cranium)</h2>
+          <p id="inspSubtitle" class="insp-subtitle">Hypognathous Orthopteran Cranium, Compound Eyes &amp; Filiform Antennae</p>
+        </div>
+
+        <!-- Specimen Cutout Preview + Quick Actions -->
+        <div class="specimen-card">
+          <div class="specimen-img-wrap">
+            <img id="inspImage" src="textures/Head_Capsule_rgba.png" alt="Dissected specimen cutout" />
+          </div>
+          <div class="specimen-actions">
+            <button id="btnToggleDissectSelected" class="primary-action-btn" type="button">
+              🥢 Extract with Forceps
+            </button>
+            <button id="btnFocusSelected" class="secondary-action-btn" type="button">
+              🎯 Focus 3D Camera
+            </button>
+          </div>
+        </div>
+
+        <!-- Detailed Description & Sub-parts -->
+        <div class="inspector-body">
+          <div class="info-block">
+            <h3>Anatomical Position</h3>
+            <p id="inspPosition"></p>
+          </div>
+
+          <div class="info-block">
+            <h3>Feeding Mechanics &amp; Function</h3>
+            <p id="inspFunction"></p>
+          </div>
+
+          <div class="info-block">
+            <h3>Key Sub-Structures <span class="hint-tag">(Click to locate in 3D)</span></h3>
+            <ul id="inspSubStructures" class="substructure-list"></ul>
+          </div>
+
+          <div class="info-block protocol-box">
+            <h3>Lab Dissection Technique</h3>
+            <p id="inspInstruction"></p>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
